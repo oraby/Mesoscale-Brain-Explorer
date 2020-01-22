@@ -56,7 +56,7 @@ class Widget(QWidget, WidgetDefault):
         self.use_shift_checkbox = QCheckBox("Use This Shift for Alignment")
         self.main_button = QPushButton('&Align')
         self.reference_frame = None
-        WidgetDefault.__init__(self, project, plugin_position)
+        WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
     def setup_ui(self):
         super().setup_ui()

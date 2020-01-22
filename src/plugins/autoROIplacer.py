@@ -394,6 +394,6 @@ class MyPlugin(PluginDefault):
     self.name = 'Import CSV ROI Coordinates'
     self.widget = Widget(project, plugin_position)
     super().__init__(self.widget, self.widget.Labels, self.name)
-  
+
   def run(self):
     pass

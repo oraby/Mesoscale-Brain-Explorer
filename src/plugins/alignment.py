@@ -482,7 +482,7 @@ class Widget(QWidget, WidgetDefault):
 
         # save shifts to csv
         save_loc = QFileDialog.getSaveFileName(self, 'Save Shifts', QSettings().value('path_of_last_project'),
-                                               '(*.csv)')
+                                               '(*.csv)')[0]
         if save_loc:
             # fields = list(shifts[list(shifts.keys())[0]].keys())
             # for key in shifts.keys():

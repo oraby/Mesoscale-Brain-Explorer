@@ -25,7 +25,7 @@ class JSObjectModel(QAbstractTableModel):
   def rowCount(self, parent):
     return len(self._data)
 
-  def columnCount(self, parent): 
+  def columnCount(self, parent):
     return len(self.cols)
 
   def data(self, index, role):
@@ -53,7 +53,7 @@ class FileTableModel(JSObjectModel):
 
   def get_path(self, index):
     return self.retrieve(index.row(), 'path')
-  
+
   def get_entry(self, index):
     return self.retrieve(index.row())
 
@@ -116,7 +116,7 @@ class InfoWidget(QFrame):
   def __init__(self, text, parent=None):
     super(InfoWidget, self).__init__(parent)
     self.setup_ui(text)
-  
+
   def setup_ui(self, text):
     hbox = QHBoxLayout()
     icon = QLabel()
@@ -134,7 +134,7 @@ class InfoWidget(QFrame):
     self.setFrameStyle(QFrame.Panel | QFrame.Raised)
     self.setLineWidth(2)
     self.setStyleSheet('QFrame{background-color: #999; border-radius: 10px;}')
-    
+
 
 # Added from mse_ui_elements merge (commit 8f0d28d2a22430a7e3f3494c249dc22fac510ff1)
 

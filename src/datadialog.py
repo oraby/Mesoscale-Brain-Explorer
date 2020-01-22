@@ -83,7 +83,7 @@ class RemoveDialog(QDialog):
 
 class DataDialog(QDialog):
   reload_plugins = pyqtSignal()
-  
+
   def __init__(self, parent=None):
     super(DataDialog, self).__init__(parent)
     self.table = FileTable()
@@ -109,7 +109,7 @@ class DataDialog(QDialog):
     hbox.addLayout(vbox)
     hbox.setStretch(0, 1)
     hbox.setStretch(1, 0)
-   
+
     self.setLayout(hbox)
     self.resize(800, 600)
 

@@ -384,7 +384,7 @@ class MainWindow(QMainWindow):
     project = self.project_manager.new_project()
     if project:
       self.load_project(project)
-  
+
   def load_project(self, project):
     self.clean()
     self.project = project
@@ -444,7 +444,7 @@ class MainWindow(QMainWindow):
     self.setWindowTitle(APPNAME)
     self.project_menu.setEnabled(False)
     self.enable(False)
-  
+
   def set_plugin(self, plugin_name, plugin_position):
     p = self.load_plugin('plugins.' + str(plugin_name), plugin_position)
     if not p:
@@ -462,12 +462,12 @@ class MainWindow(QMainWindow):
 
     lt = QVBoxLayout()
     lt.addWidget(p.widget)
- 
+
     self.clean_plugin()
     self.pl_frame.setLayout(lt)
 
     # p.run()
-  
+
   def clean_plugin(self):
     if self.pl_frame.layout():
       clear_layout(self.pl_frame.layout())
@@ -583,7 +583,7 @@ class MainWindow(QMainWindow):
     author = 'Cornelis Dirk Haupt'
     date = '2017'
 
-    QMessageBox.about(self, 'About ' + APPNAME, 
+    QMessageBox.about(self, 'About ' + APPNAME,
         """
         <b>%s</b>
         <p>An online readme, including user manual and developer tutorial can be found
@@ -604,7 +604,7 @@ class MainWindow(QMainWindow):
         <tr>
         <td>Date:</td>
         <td>%s</td>
-        </tr>            
+        </tr>
         </table></p>
         """ % (APPNAME, author, VERSION, date))
 
