@@ -5,7 +5,7 @@ import os
 import numpy as np
 import psutil
 import qtutil
-from PyQt4.QtGui import *
+from PyQt5.QtGui import *
 
 from .util import project_functions as pfs
 from .util.plugin import PluginDefault
@@ -20,11 +20,11 @@ class Widget(QWidget, WidgetDefault):
         manip = 'evoked-avg'
 
     def __init__(self, project, plugin_position, parent=None):
-        super(Widget, self).__init__(parent)
+        super(Widget, self).__init__(parent=parent)
         if not project or not isinstance(plugin_position, int):
             return
         self.avg_button = QPushButton('Generate Evoked Average')
-        WidgetDefault.__init__(self, project, plugin_position)
+        WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
     def setup_ui(self):
         super().setup_ui()

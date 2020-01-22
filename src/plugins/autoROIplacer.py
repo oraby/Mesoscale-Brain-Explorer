@@ -7,9 +7,9 @@ from shutil import copyfile
 
 import numpy as np
 import qtutil
-from PyQt4 import QtCore
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5 import QtCore
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import file_io
 from .util.custom_qt_items import RoiItemModel, MyTableWidget
@@ -26,7 +26,7 @@ class Widget(QWidget, WidgetDefault):
     list_display_type = ['ref_frame', 'video']
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     # check project
     if not project or not isinstance(plugin_position, int):
         return
@@ -45,7 +45,7 @@ class Widget(QWidget, WidgetDefault):
     self.roi_list.setEditTriggers(QAbstractItemView.NoEditTriggers)
     # A flag to see whether selected_roi_changed is being entered for the first time
     self.selected_roi_changed_flag = 0
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
     roi_names = [str(f['name']) for f in project.files if f['type'] == 'auto_roi']
 
     for roi_name in roi_names:
@@ -167,7 +167,7 @@ class Widget(QWidget, WidgetDefault):
       if not text_file_path:
           text_file_path = QFileDialog.getOpenFileName(
               self, 'Load images', QSettings().value('last_load_text_path'),
-              'Video files (*.csv *.txt)')
+              'Video files (*.csv *.txt)')[0]
           if not text_file_path:
               return
           QSettings().setValue('last_load_text_path', os.path.dirname(text_file_path))

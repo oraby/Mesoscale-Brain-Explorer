@@ -6,8 +6,8 @@ import sys
 from shutil import copyfile
 
 import qtutil
-from PyQt4.QtCore import QSettings
-from PyQt4.QtGui import *
+from PyQt5.QtCore import QSettings
+from PyQt5.QtGui import *
 
 from src.plugins.util import file_io
 from src.plugins.util import project_functions as pfs
@@ -28,7 +28,7 @@ class Widget(QWidget, WidgetDefault):
     # todo: Define default values for this plugin and its UI components here
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     if not project or not isinstance(plugin_position, int):
         return
     # todo: Define global attributes and UI components here
@@ -40,7 +40,7 @@ class Widget(QWidget, WidgetDefault):
     self.selected_add_list = QListWidget()
     self.text_file_path = self.Defaults.add_list_path_default
     # note the call to WidgetDefault AFTER defining attributes
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
     super().setup_ui()
@@ -100,7 +100,7 @@ class Widget(QWidget, WidgetDefault):
       if not text_file_path:
           text_file_path = QFileDialog.getOpenFileName(
               self, 'Load images', QSettings().value('last_load_text_path'),
-              'Video files (*.csv *.txt)')
+              'Video files (*.csv *.txt)')[0]
           if not text_file_path:
               return
           QSettings().setValue('last_load_text_path', os.path.dirname(text_file_path))

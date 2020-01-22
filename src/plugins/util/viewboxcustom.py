@@ -111,6 +111,7 @@ class MultiRoiViewBox(pg.ViewBox):
         pos  = ev.screenPos()
         menu.popup(QtCore.QPoint(pos.x(), pos.y()))
 
+    @QtCore.pyqtSlot()
     def export(self):
         #self.exp = ImageExporterCustom(self)
         self.exp = ImageExporter(self)
@@ -354,12 +355,12 @@ class MultiRoiViewBox(pg.ViewBox):
             self.crosshair_toggle = QtGui.QAction("Show crosshair", self.menu)
 
             #self.loadROIAct.clickEvent.connect(self.loadROI)
-            self.removeAllROIAct.triggered[()].connect(self.removeROI)
-            self.loadROIAct.triggered[()].connect(self.loadROI)
+            self.removeAllROIAct.triggered.connect(self.removeROI)
+            self.loadROIAct.triggered.connect(self.loadROI)
             self.crosshair_toggle.toggled.connect(self.toggleCrosshair)
             # self.dexaMode.toggled.connect(self.toggleViewMode)
-            self.viewAll.triggered[()].connect(self.autoRange)
-            self.exportImage.triggered[()].connect(self.export)
+            self.viewAll.triggered.connect(self.autoRange)
+            self.exportImage.triggered.connect(self.export)
 
             self.menu.addAction(self.crosshair_toggle)
             self.menu.addAction(self.viewAll)
@@ -522,7 +523,7 @@ class MultiRoiViewBox(pg.ViewBox):
                 self.roi_placed.emit(roi)
                 return
             if not fileName:
-              fileName = QtGui.QFileDialog.getSaveFileName(None, self.tr("Save ROI"), QtCore.QDir.currentPath(), self.tr("ROI (*.roi)"))
+              fileName = QtGui.QFileDialog.getSaveFileName(None, self.tr("Save ROI"), QtCore.QDir.currentPath(), self.tr("ROI (*.roi)"))[0]
               # Fix for PyQt/PySide compatibility. PyQt returns a QString, whereas PySide returns a tuple (first entry is filename as string)
               if isinstance(fileName, types.TupleType): fileName = fileName[0]
               if hasattr(QtCore, 'QString') and isinstance(fileName, QtCore.QString): fileName = str(fileName)
@@ -565,12 +566,13 @@ class MultiRoiViewBox(pg.ViewBox):
       self.rois.remove(roi)
       self.removeItem(roi)
 
+    @QtCore.pyqtSlot()
     def loadROI(self, fileNames = None):
         """ Load a previously saved ROI from file """
         if fileNames == None:
             fileNames = QtGui.QFileDialog.getOpenFileNames(None, self.tr("Load ROI"),
                                                            QtCore.QDir.currentPath(),
-                                                           self.tr("ROI (*.roi)"))
+                                                           self.tr("ROI (*.roi)"))[0]
         if hasattr(QtCore, 'QStringList') and \
                 isinstance(fileNames, QtCore.QStringList): fileNames = [str(i) for i in fileNames]
         if len(fileNames) > 0:
@@ -582,6 +584,7 @@ class MultiRoiViewBox(pg.ViewBox):
                     elif roiState['type'] == 'PolyLineROIcustom':
                         self.addPolyLineROI(roiState['handlePositions'], roiState['name'])
 
+    @QtCore.pyqtSlot()
     def removeROI(self):
         """ Delete the highlighted ROI """
         if self.currentROIindex!=None:

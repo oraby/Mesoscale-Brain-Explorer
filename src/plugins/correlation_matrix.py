@@ -4,8 +4,8 @@ from __future__ import print_function
 import os
 import sys
 import math
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import custom_qt_items as cqt
 from .util import file_io
@@ -123,7 +123,7 @@ class DockWindowMat(DockWindow):
     def load_state(self):
         filenames = QFileDialog.getOpenFileNames(
           self, 'Load matrix', QSettings().value('last_vis_path'),
-          'visualization window pickle (*.pkl)')
+          'visualization window pickle (*.pkl)')[0]
         if not filenames:
             return
         QSettings().setValue('last_vis_path', os.path.dirname(filenames[0]))
@@ -161,7 +161,7 @@ class Widget(QWidget, WidgetDefault):
         sb_max_default = 1.00
 
     def __init__(self, project, plugin_position, parent=None):
-        super(Widget, self).__init__(parent)
+        super(Widget, self).__init__(parent=parent)
 
         if not project or not isinstance(plugin_position, int):
             return
@@ -190,7 +190,7 @@ class Widget(QWidget, WidgetDefault):
         self.sem_checkbox = QCheckBox("Use SEM instead of SD")
         self.cm_pb = QPushButton('Correlation &Matrix')
         self.roi_list = RoiListModified(self, self.Defaults.roi_list_types_displayed, RoiModel())
-        WidgetDefault.__init__(self, project, plugin_position)
+        WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
     def setup_ui(self):
         super().setup_ui()
@@ -293,7 +293,7 @@ class Widget(QWidget, WidgetDefault):
         qtutil.info("Please select the matrix that will act as the minuend")
         minuend_path = QFileDialog.getOpenFileName(
           self, 'Load matrix', QSettings().value('last_vis_path'),
-          'visualization window pickle (*.pkl)')
+          'visualization window pickle (*.pkl)')[0]
         if not minuend_path:
             return
 
@@ -461,7 +461,7 @@ class Widget(QWidget, WidgetDefault):
                   "\n" \
                   "Continue?"
         reply = QMessageBox.question(self, 'Save All',
-                                     continue_msg, QMessageBox.Yes, QMessageBox.No)
+                                     continue_msg, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.No:
             return
 
@@ -509,7 +509,7 @@ class Widget(QWidget, WidgetDefault):
 
         csv_msg = "Save csv files of all open Correlation Matrix windows as well?"
         reply = QMessageBox.question(self, 'Save All',
-                                     csv_msg, QMessageBox.Yes, QMessageBox.No)
+                                     csv_msg, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
             self.save_open_dialogs_to_csv()
 
@@ -534,7 +534,7 @@ class Widget(QWidget, WidgetDefault):
                                         "" \
                                         "\n \nOtherwise, would you like to detatch this file from your project? "
                 reply = QMessageBox.question(self, 'File Load Error',
-                                             del_msg, QMessageBox.Yes, QMessageBox.No)
+                                             del_msg, QMessageBox.Yes | QMessageBox.No)
                 if reply == QMessageBox.Yes:
                     norm_path = os.path.normpath(pickle_path)
                     self.project.files[:] = [f for f in self.project.files if
@@ -545,7 +545,7 @@ class Widget(QWidget, WidgetDefault):
                                              "\n \n Would you like to continue loading the " \
                                              "remaining project matrices?"
                     reply = QMessageBox.question(self, 'Continue?',
-                                                 load_msg, QMessageBox.Yes, QMessageBox.No)
+                                                 load_msg, QMessageBox.Yes | QMessageBox.No)
                 if reply == QMessageBox.No:
                     return
                 continue

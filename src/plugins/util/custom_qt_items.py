@@ -3,9 +3,10 @@
 import os
 
 import numpy as np
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5 import QtGui, QtCore
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 from . import file_io
 from .mygraphicsview import MyGraphicsView
@@ -64,7 +65,7 @@ class FileTable(QTableView):
     self.verticalHeader().hide()
     self.horizontalHeader().setResizeMode(QHeaderView.ResizeToContents)
     # self.horizontalHeader().setStretchLastSection(True)
-    self.setSelectionBehavior(QAbstractItemView.SelectRows) 
+    self.setSelectionBehavior(QAbstractItemView.SelectRows)
 
     if project:
       self.setModel(FileTableModel(project))

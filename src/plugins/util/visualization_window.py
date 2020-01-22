@@ -3,8 +3,8 @@ import sys
 import numpy as np
 import pyqtgraph as pg
 import pyqtgraph.console
-from PyQt4.QtCore import QSettings, pyqtSignal
-from PyQt4.QtGui import *
+from PyQt5.QtCore import QSettings, pyqtSignal
+from PyQt5.QtGui import *
 from pyqtgraph.Qt import QtCore, QtGui
 from pyqtgraph.dockarea import *
 import uuid
@@ -101,7 +101,7 @@ class DockWindow(QMainWindow):
     def load_state(self):
         filenames = QFileDialog.getOpenFileNames(
           self, 'Load images', QSettings().value('last_vis_path'),
-          'visualization window pickle (*.pkl)')
+          'visualization window pickle (*.pkl)')[0]
         if not filenames:
             return
         QSettings().setValue('last_vis_path', os.path.dirname(filenames[0]))
@@ -122,9 +122,9 @@ class DockWindow(QMainWindow):
     def closeEvent(self, event):
         quit_msg = "Do you want to save changes made to " + self.windowTitle() + " before exiting?"
         reply = QtGui.QMessageBox.question(self, 'Message',
-                                           quit_msg, QtGui.QMessageBox.Yes,
-                                           QtGui.QMessageBox.No,
-                                           QtGui.QMessageBox.Cancel)
+                                           quit_msg,
+                                           QtGui.QMessageBox.Yes | QtGui.QMessageBox.No | QtGui.QMessageBox.Cancel,
+                                           QtGui.QMessageBox.Yes)
 
         if reply == QtGui.QMessageBox.Cancel or reply == QtGui.QMessageBox.Close:
             event.ignore()

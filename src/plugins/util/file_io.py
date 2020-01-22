@@ -6,7 +6,7 @@ import numpy as np
 import psutil
 import qtutil
 
-from PyQt4.QtGui import QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 
 
 class UnknownFileFormatError(Exception):

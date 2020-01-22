@@ -4,7 +4,7 @@ import functools
 import sys
 
 import qtutil
-from PyQt4.QtGui import *
+from PyQt5.QtGui import *
 
 from .util.plugin import PluginDefault
 from .util.plugin import WidgetDefault
@@ -21,7 +21,7 @@ class Widget(QWidget, WidgetDefault):
     # todo: Define default values for this plugin and its UI components here
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     if not project or not isinstance(plugin_position, int):
         return
     # todo: Define global attributes and UI components here
@@ -29,7 +29,7 @@ class Widget(QWidget, WidgetDefault):
     self.main_button = QPushButton('Custom Analysis')
     self.example_sb = QSpinBox()
     # note the call to WidgetDefault AFTER defining attributes
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
     super().setup_ui()

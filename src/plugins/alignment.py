@@ -9,9 +9,9 @@ import copy
 import imreg_dft as ird
 import numpy as np
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtCore import QPointF
-from PyQt4.QtGui import *
+from PyQt5.QtCore import QPointF, QSettings, Qt
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 from scipy import ndimage
 
 from .util import file_io
@@ -42,7 +42,7 @@ class Widget(QWidget, WidgetDefault):
         crop_percentage_sb_default = 20
 
     def __init__(self, project, plugin_position, parent=None):
-        super(Widget, self).__init__(parent)
+        super(Widget, self).__init__(parent=parent)
         if not project or not isinstance(plugin_position, int):
             return
         self.plugin_position = plugin_position
@@ -73,7 +73,7 @@ class Widget(QWidget, WidgetDefault):
         # self.use_shift_checkbox = QCheckBox("Use This Shift for Alignment")
         # self.reference_frame = None
         self.align_btn = QPushButton('&Align')
-        WidgetDefault.__init__(self, project, plugin_position)
+        WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
         self.shift_table_col1 = [os.path.splitext(os.path.basename(x))[0] for x in self.selected_videos if
                                  self.Defaults.secondary_manip not in x]
         self.update_crop_border()
@@ -271,7 +271,7 @@ class Widget(QWidget, WidgetDefault):
 
     def cancel_progress_dialog(self, dialog):
         abort_msg = "Are you sure?"
-        reply = QMessageBox.question(self, 'Abort Process', abort_msg, QMessageBox.Yes, QMessageBox.No)
+        reply = QMessageBox.question(self, 'Abort Process', abort_msg, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
             dialog.close()
             raise InterruptedError('Progress Halted')

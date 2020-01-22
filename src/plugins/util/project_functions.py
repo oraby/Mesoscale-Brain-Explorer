@@ -7,8 +7,8 @@ import pickle
 import uuid
 
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from . import constants
 from . import file_io
@@ -185,7 +185,10 @@ def selected_video_changed_multi(widget, selected, deselected):
     #     widget.selected_videos = [x for x in widget.selected_videos if x != vidpath]
     widget.selected_videos = []
     for index in widget.video_list.selectedIndexes():
-        vidpath = str(os.path.normpath(os.path.join(widget.project.path, index.data(Qt.DisplayRole)) + '.npy'))
+        data = index.data(Qt.DisplayRole)
+        if data is None:
+            continue
+        vidpath = str(os.path.normpath(os.path.join(widget.project.path, data)  + '.npy'))
         if vidpath not in widget.selected_videos and vidpath != 'None':
             widget.selected_videos = widget.selected_videos + [vidpath]
             widget.shown_video_path = str(os.path.normpath(os.path.join(widget.project.path,

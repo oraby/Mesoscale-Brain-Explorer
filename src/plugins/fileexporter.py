@@ -1,8 +1,8 @@
 import os
 import sys
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import constants
 
@@ -73,7 +73,7 @@ class Widget(QWidget, WidgetDefault):
     export_framerate_default = 30
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     if not project or not isinstance(plugin_position, int):
         return
     self.project = project
@@ -83,7 +83,7 @@ class Widget(QWidget, WidgetDefault):
     self.cb_dtype = QComboBox()
     self.export_filetype_cb = QComboBox()
     self.export_bulk_pb = QPushButton('Export in &Bulk')
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
       super().setup_ui()

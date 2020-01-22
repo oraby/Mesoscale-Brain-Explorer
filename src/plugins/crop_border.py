@@ -4,8 +4,8 @@ import functools
 import sys
 
 import numpy as np
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import file_io
 from .util import project_functions as pfs
@@ -21,14 +21,14 @@ class Widget(QWidget, WidgetDefault):
       crop_percentage_sb_default = 25
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     if not project or not isinstance(plugin_position, int):
         return
     self.main_button = QPushButton('Crop')
     self.crop_percentage_sb = QSpinBox()
     self.left_frame_range = QSpinBox()
     self.right_frame_range = QSpinBox()
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
     super().setup_ui()

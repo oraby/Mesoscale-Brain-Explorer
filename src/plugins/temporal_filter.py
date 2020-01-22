@@ -4,10 +4,10 @@ import functools
 import os
 import sys
 
-import PyQt4
+import PyQt5
 import numpy as np
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from scipy import signal
 
 from .util import file_io
@@ -28,13 +28,13 @@ class Widget(QWidget, WidgetDefault):
         manip = "temporal-filter"
 
     def __init__(self, project, plugin_position, parent=None):
-        super(Widget, self).__init__(parent)
+        super(Widget, self).__init__(parent=parent)
         if not project or not isinstance(plugin_position, int):
             return
         if project == "standalone":
             filenames = QFileDialog.getOpenFileNames(
                 self, 'Load data', str(QSettings().value('last_load_data_path')),
-                'Video files (*.npy)')
+                'Video files (*.npy)')[0]
             QSettings().setValue('last_load_data_path', os.path.dirname(filenames[0]))
             self.project = None
         else:
@@ -43,7 +43,7 @@ class Widget(QWidget, WidgetDefault):
         self.f_high = QDoubleSpinBox()
         self.frame_rate = QSpinBox()
         self.temp_filter_pb = QPushButton('&Apply Filter')
-        WidgetDefault.__init__(self, project, plugin_position)
+        WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
     def setup_ui(self):
         super().setup_ui()
@@ -150,13 +150,13 @@ class Widget(QWidget, WidgetDefault):
             callback(0.9)
             frames += avg_frames
             if not self.project:
-                filename = PyQt4.QtGui.QFileDialog.getSaveFileName(self, 'Choose save location',
+                filename = PyQt5.QtGui.QFileDialog.getSaveFileName(self, 'Choose save location',
                                                                    str(QSettings().value('last_load_data_path')),
-                                                                   filter='*.npy')
+                                                                   filter='*.npy')[0]
                 np.save(str(filename), frames)
-                msgBox = PyQt4.QtGui.QMessageBox()
+                msgBox = PyQt5.QtGui.QMessageBox()
                 msgBox.setText(str(filename)+" saved")
-                msgBox.addButton(PyQt4.QtGui.QMessageBox.Ok)
+                msgBox.addButton(PyQt5.QtGui.QMessageBox.Ok)
                 msgBox.exec_()
             else:
                 path = pfs.save_project(video_path, self.project, frames, 'temporal-filter', 'video')

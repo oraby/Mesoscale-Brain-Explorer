@@ -5,8 +5,8 @@ import os
 import sys
 
 import numpy as np
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import file_io
 from .util import project_functions as pfs
@@ -28,7 +28,7 @@ class Widget(QWidget, WidgetDefault):
     manip = 'crop'
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     if not project or not isinstance(plugin_position, int):
         return
     self.project = project
@@ -36,7 +36,7 @@ class Widget(QWidget, WidgetDefault):
     self.roi_list.model().textChanged.connect(self.roi_item_changed)
     self.create_roi_button = QPushButton('Create ROI')
     self.crop_button = QPushButton('Crop to ROI(s) for selected files')
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def roi_item_edited(self, item):
     new_name = item.text()

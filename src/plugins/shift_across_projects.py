@@ -8,9 +8,9 @@ from os import listdir
 from os.path import isfile, join
 
 import numpy as np
-from PyQt4 import QtGui
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5 import QtGui
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 sys.path.append('..')
 import qtutil
@@ -30,7 +30,7 @@ class FileAlreadyInProjectError(Exception):
 
 class Widget(QWidget):
   def __init__(self, project, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
 
     if not project:
       return

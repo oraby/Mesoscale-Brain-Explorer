@@ -3,7 +3,7 @@
 import sys
 
 import numpy as np
-from PyQt4.QtGui import *
+from PyQt5.QtGui import *
 
 from .util import project_functions as pfs
 from .util.plugin import PluginDefault
@@ -18,11 +18,11 @@ class Widget(QWidget, WidgetDefault):
     pass
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
     if not project or not isinstance(plugin_position, int):
         return
     self.main_button = QPushButton('Average stack into one frame')
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
     super().setup_ui()

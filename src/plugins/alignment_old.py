@@ -5,8 +5,8 @@ import functools
 import imreg_dft as ird
 import numpy as np
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import file_io
 from .util import project_functions as pfs
@@ -35,7 +35,7 @@ class Widget(QWidget, WidgetDefault):
         scale_shift_default = 1.0
 
     def __init__(self, project, plugin_position, parent=None):
-        super(Widget, self).__init__(parent)
+        super(Widget, self).__init__(parent=parent)
         if not project or not isinstance(plugin_position, int):
             return
         self.plugin_position = plugin_position

@@ -8,8 +8,8 @@ from shutil import copyfile
 
 import numpy as np
 import psutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 sys.path.append('..')
 import qtutil
@@ -44,7 +44,7 @@ class Widget(QWidget):
     dtype_default = 0
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
 
     if not project or not isinstance(plugin_position, int):
       return
@@ -213,7 +213,7 @@ class Widget(QWidget):
     except:
       warn_msg = "Continue trying to convert raw to npy despite problems? Your data might be corrupt."
       reply = QMessageBox.question(self, 'Import Issues Detected',
-                                     warn_msg, QMessageBox.Yes, QMessageBox.No)
+                                   warn_msg, QMessageBox.Yes | QMessageBox.No)
       if reply == QMessageBox.Yes:
           try:
               fileconverter.raw2npy(filename, path, dtype, width, height, channels, channel, callback,
@@ -364,9 +364,10 @@ class Widget(QWidget):
     if not input_paths:
         filenames = QFileDialog.getOpenFileNames(
           self, 'Load images', QSettings().value('last_load_data_path'),
-          'Video files (*.npy *.tif *.raw)')
+          'Video files (*.npy *.tif *.raw)')[0]
         if not filenames:
           return
+        print(filenames)
         QSettings().setValue('last_load_data_path', os.path.dirname(filenames[0]))
     else:
         filenames = input_paths
@@ -384,7 +385,7 @@ class Widget(QWidget):
   def get_input_paths(self):
       filenames = QFileDialog.getOpenFileNames(
           self, 'Load images', QSettings().value('last_load_data_path'),
-          'Video files (*.npy *.tif *.raw)')
+          'Video files (*.npy *.tif *.raw)')[0]
       if not filenames:
           return
       QSettings().setValue('last_load_data_path', os.path.dirname(filenames[0]))

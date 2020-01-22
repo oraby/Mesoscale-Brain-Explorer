@@ -3,8 +3,9 @@
 import os
 
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 from plugins.util.custom_qt_items import FileTable, FileTableModel
 
 class DetailsModel(QAbstractTableModel):

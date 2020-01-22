@@ -3,8 +3,8 @@
 import ast
 
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from .util import file_io
 from .util import project_functions as pfs
@@ -24,7 +24,7 @@ class Widget(QWidget, WidgetDefault):
       origin_label_default = 'Origin:'
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
 
     if not project or not isinstance(plugin_position, int):
         return
@@ -33,7 +33,7 @@ class Widget(QWidget, WidgetDefault):
     self.combo_box = QComboBox()
     self.avg_origin_button = QPushButton('&Compute averaged origin')
     self.origin_label = QLabel(self.Defaults.origin_label_default)
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
     super().setup_ui()

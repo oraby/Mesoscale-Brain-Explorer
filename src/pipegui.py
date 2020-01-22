@@ -9,9 +9,10 @@ import sys
 import json
 
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtGui import QApplication
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication
 from datadialog import DataDialog
 from pipeconf import PipeconfDialog, PipelineModel
 from project import ProjectManager
@@ -207,7 +208,7 @@ class MainWindow(QMainWindow):
     if last:
         quit_msg = "Load last project " + last + " ?"
         reply = QMessageBox.question(self, 'Project Setup',
-                         quit_msg, QMessageBox.Yes, QMessageBox.No)
+                         quit_msg, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
             if last:
                 try:
@@ -446,6 +447,8 @@ class MainWindow(QMainWindow):
     self.enable(False)
 
   def set_plugin(self, plugin_name, plugin_position):
+    if plugin_name == "None":
+      return
     p = self.load_plugin('plugins.' + str(plugin_name), plugin_position)
     if not p:
       return

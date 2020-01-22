@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import qtutil
 import scipy.misc
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from pyqtgraph.Qt import QtGui
 from pyqtgraph.dockarea import *
 from scipy.stats.stats import pearsonr
@@ -112,7 +112,7 @@ class DockWindowSPC(DockWindow):
     def load_state(self):
         filenames = QFileDialog.getOpenFileNames(
           self, 'Load images', QSettings().value('last_vis_path'),
-          'visualization window pickle (*.pkl)')
+          'visualization window pickle (*.pkl)')[0]
         if not filenames:
             return
         QSettings().setValue('last_vis_path', os.path.dirname(filenames[0]))
@@ -187,7 +187,7 @@ class Widget(QWidget, WidgetDefault):
         window_type = 'spc_window'
 
     def __init__(self, project, plugin_position, parent=None):
-        super(Widget, self).__init__(parent)
+        super(Widget, self).__init__(parent=parent)
         if not project or not isinstance(plugin_position, int):
             return
         self.project = project
@@ -205,7 +205,7 @@ class Widget(QWidget, WidgetDefault):
         self.max_sb = QDoubleSpinBox()
         self.avg_maps_cb = QCheckBox(self.Labels.avg_maps_label)
         self.cm_type = self.cm_comboBox.itemText(0)
-        WidgetDefault.__init__(self, project, plugin_position)
+        WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
     def setup_ui(self):
         super().setup_ui()

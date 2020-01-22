@@ -2,7 +2,7 @@
 # -*- coding: cp1252 -*-
 
 import pyqtgraph as pg
-from PyQt4.QtGui import *
+from PyQt5.QtGui import *
 
 from .viewboxcustom import MultiRoiViewBox
 

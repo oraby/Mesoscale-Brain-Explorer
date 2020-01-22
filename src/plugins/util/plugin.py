@@ -2,8 +2,8 @@ import functools
 import os
 
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 from . import project_functions as pfs
 from .mygraphicsview import MyGraphicsView
@@ -29,7 +29,8 @@ class WidgetDefault(object):
         last_manips_to_display_default = ['All']
         list_display_type = ['video']
 
-    def __init__(self, project, plugin_position):
+    def __init__(self, project=None, plugin_position=None, **kwds):
+        super().__init__(**kwds)
         if not project or not isinstance(plugin_position, int):
             return
         self.plugin_position = plugin_position

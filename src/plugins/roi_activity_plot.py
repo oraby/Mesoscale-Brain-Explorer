@@ -10,8 +10,8 @@ import functools
 import numpy as np
 import pyqtgraph as pg
 import qtutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from pyqtgraph.dockarea import *
 
 from .util import file_io
@@ -330,7 +330,7 @@ class DockWindowPlot(DockWindow):
     def load_state(self):
         filenames = QFileDialog.getOpenFileNames(
             self, 'Load images', QSettings().value('last_vis_path'),
-            'visualization window pickle (*.pkl)')
+            'visualization window pickle (*.pkl)')[0]
         if not filenames:
             return
         QSettings().setValue('last_vis_path', os.path.dirname(filenames[0]))
@@ -423,7 +423,7 @@ class Widget(QWidget, WidgetDefault):
     manip = "plot"
 
   def __init__(self, project, plugin_position, parent=None):
-    super(Widget, self).__init__(parent)
+    super(Widget, self).__init__(parent=parent)
 
     if not project or not isinstance(plugin_position, int):
         return
@@ -435,7 +435,7 @@ class Widget(QWidget, WidgetDefault):
     self.load_pb = QPushButton("&Load project plot windows")
     self.plot_pb = QPushButton('Plot &activity')
     self.open_dialogs_data_dict = []
-    WidgetDefault.__init__(self, project, plugin_position)
+    WidgetDefault.__init__(self, project=project, plugin_position=plugin_position)
 
   def setup_ui(self):
     super().setup_ui()

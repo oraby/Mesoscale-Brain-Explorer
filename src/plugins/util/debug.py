@@ -4,7 +4,7 @@ import pdb
 import sys
 from pdb import set_trace
 
-from PyQt4.QtCore import pyqtRemoveInputHook, pyqtRestoreInputHook
+from PyQt5.QtCore import pyqtRemoveInputHook, pyqtRestoreInputHook
 
 
 class SetTrace:
