@@ -269,7 +269,8 @@ class Widget(QWidget):
     try:
       fileconverter.tif2npy(filename, path, callback)
     except:
-      qtutil.critical('Converting tiff to npy failed.')
+      tb = traceback.format_exc()
+      qtutil.critical('Converting tiff to npy failed. Reason:\n' + str(tb))
       progress.close()
     else:
       ret_filename = path
