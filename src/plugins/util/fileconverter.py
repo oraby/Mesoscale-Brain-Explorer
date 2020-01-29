@@ -13,27 +13,27 @@ class RawToNpyConvertError(Exception):
 def tif2npy(filename_from, filename_to, progress_callback):
   progress_callback(0.01)
   with tiff.TiffFile(filename_from) as tif:
-    if len(tif[0].shape) == 2 or len(tif[0].shape) == 3:
-        if len(tif[0].shape) == 2:
-            w, h = tif[0].shape
-            shape = len(tif), w, h
+    if len(tif.pages[0].shape) == 2 or len(tif.pages[0].shape) == 3:
+        if len(tif.pages[0].shape) == 2:
+            w, h = tif.pages[0].shape
+            shape = len(tif.pages), w, h
             image_j_tiff = False
         else:
-            shape = tif[0].shape
+            shape = tif.pages[0].shape
             image_j_tiff = True
     else:
         raise ConvertError()
     progress_callback(0.01)
-    np.save(filename_to, np.empty(shape, tif[0].dtype))
+    np.save(filename_to, np.empty(shape, tif.pages[0].dtype))
     fp = np.load(filename_to, mmap_mode='r+')
 
     if image_j_tiff:
-        pages = tif[0].asarray()
+        pages = tif.pages[0].asarray()
         for i, page in enumerate(pages):
             progress_callback(i / float(shape[0] - 1))
             fp[i] = page
     else:
-        for i, page in enumerate(tif):
+        for i, page in enumerate(tif.pages):
           progress_callback(i / float(shape[0]-1))
           fp[i] = page.asarray()
 
